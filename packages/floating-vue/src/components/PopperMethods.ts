@@ -10,8 +10,5 @@ export default {
     dispose (...args) {
       return this.$refs.popper.dispose(...args)
     },
-    onResize (...args) {
-      return this.$refs.popper.onResize(...args)
-    },
   },
 }

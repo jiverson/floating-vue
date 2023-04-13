@@ -2,12 +2,13 @@ import { defineComponent } from 'vue'
 import {
   autoPlacement,
   computePosition,
+  getOverflowAncestors,
   offset,
   shift,
   flip,
   arrow,
-  getScrollParents,
   size,
+  autoUpdate,
 } from '@floating-ui/dom'
 import { supportsPassive, isIOS } from '../util/env'
 import { placements, Placement } from '../util/popper'
@@ -333,7 +334,6 @@ export default () => defineComponent({
         show: this.show,
         hide: this.hide,
         handleResize: this.handleResize,
-        onResize: this.onResize,
         classes: {
           ...this.classes,
           popperClass: this.popperClass,
@@ -494,6 +494,12 @@ export default () => defineComponent({
       this.$_innerNode = this.$_popperNode.querySelector('.v-popper__inner')
       this.$_arrowNode = this.$_popperNode.querySelector('.v-popper__arrow-container')
 
+      // Init autoUpdate
+      this.$_cleanup = autoUpdate(this.$_referenceNode, this.$_popperNode, async () => {
+        await this.$_computePosition()
+        this.$emit('resize')
+      })
+
       this.$_swapTargetAttrs('title', 'data-original-title')
 
       this.$_detachPopperNode()
@@ -510,6 +516,7 @@ export default () => defineComponent({
     dispose () {
       if (this.$_isDisposed) return
       this.$_isDisposed = true
+      this.$_cleanup()
       this.$_removeEventListeners()
       this.hide({ skipDelay: true })
       this.$_detachPopperNode()
@@ -522,13 +529,6 @@ export default () => defineComponent({
       this.$_swapTargetAttrs('data-original-title', 'title')
 
       this.$emit('dispose')
-    },
-
-    async onResize () {
-      if (this.isShown) {
-        await this.$_computePosition()
-        this.$emit('resize')
-      }
     },
 
     async $_computePosition () {
@@ -643,10 +643,10 @@ export default () => defineComponent({
         options.middleware.push(size({
           boundary: this.boundary,
           padding: this.overflowPadding,
-          apply: ({ width, height }) => {
+          apply: ({ availableWidth, availableHeight }) => {
             // Apply and re-compute
-            this.$_innerNode.style.maxWidth = width != null ? `${width}px` : null
-            this.$_innerNode.style.maxHeight = height != null ? `${height}px` : null
+            this.$_innerNode.style.maxWidth = availableWidth != null ? `${availableWidth}px` : null
+            this.$_innerNode.style.maxHeight = availableHeight != null ? `${availableHeight}px` : null
           },
         }))
       }
@@ -726,8 +726,8 @@ export default () => defineComponent({
       // Scroll
       if (!this.positioningDisabled) {
         this.$_registerEventListeners([
-          ...getScrollParents(this.$_referenceNode),
-          ...getScrollParents(this.$_popperNode),
+          ...getOverflowAncestors(this.$_referenceNode),
+          ...getOverflowAncestors(this.$_popperNode),
         ], 'scroll', () => {
           this.$_computePosition()
         })

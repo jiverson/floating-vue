@@ -9,7 +9,6 @@
       autoHide,
       hide,
       handleResize,
-      onResize,
       classes,
       result,
     }"
@@ -34,7 +33,6 @@
       :classes="classes"
       :result="result"
       @hide="hide"
-      @resize="onResize"
     >
       <div
         v-if="html"
@@ -120,11 +118,6 @@ export default defineComponent({
         this.fetchContent(true)
       },
       immediate: true,
-    },
-
-    async finalContent () {
-      await this.$nextTick()
-      this.$refs.popper.onResize()
     },
   },
 

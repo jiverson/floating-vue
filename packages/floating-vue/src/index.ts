@@ -1,6 +1,5 @@
 import { assign } from './util/assign-deep'
 import { config, FloatingVueConfig } from './config'
-import 'vue-resize/dist/vue-resize.css'
 // Components
 import PrivateDropdown from './components/Dropdown.vue'
 import PrivateMenu from './components/Menu.vue'
