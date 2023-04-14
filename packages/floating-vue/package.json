@@ -1,6 +1,6 @@
 {
   "name": "@jiverson/floating-vue",
-  "version": "2.0.0-beta.20",
+  "version": "2.0.0-beta.21",
   "description": "Easy Vue tooltips, dropdowns, menus & popovers using floating-ui",
   "author": "Josh Iverson <jiverson222@gmail.com>",
   "scripts": {
