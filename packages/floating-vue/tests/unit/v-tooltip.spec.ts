@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@peeky/test'
-import * as VTooltip from './v-tooltip'
+import * as VTooltip from '../../src/directives/v-tooltip'
 
 describe('getPlacement', () => {
   test('object notation', () => {
