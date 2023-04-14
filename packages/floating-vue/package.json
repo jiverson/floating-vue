@@ -1,8 +1,8 @@
 {
-  "name": "floating-vue",
+  "name": "@jiverson/floating-vue",
   "version": "2.0.0-beta.20",
   "description": "Easy Vue tooltips, dropdowns, menus & popovers using floating-ui",
-  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "author": "Josh Iverson <jiverson222@gmail.com>",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite build --watch",
     "build": "cross-env NODE_ENV=production vite build && tsc -d --emitDeclarationOnly && vue-typegen gen -s src -o dist",
@@ -52,7 +52,7 @@
     "not dead"
   ],
   "bugs": {
-    "url": "https://github.com/Akryum/floating-vue/issues"
+    "url": "https://github.com/jiverson/floating-vue/issues"
   },
   "homepage": "https://floating-vue.starpad.dev/",
   "keywords": [
@@ -66,7 +66,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Akryum/floating-vue.git",
+    "url": "git+https://github.com/jiverson/floating-vue.git",
     "directory": "packages/floating-vue"
   }
 }
